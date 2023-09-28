@@ -1,3 +1,3 @@
 class Filing < ApplicationRecord
-  # add your model logic here
+  validates :filer_id, :tax_period_end_date, :return_timestamp, presence: true
 end

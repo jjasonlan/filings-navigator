@@ -1,18 +1,18 @@
+require "rails_helper"
 require "test_helper"
 
 class FilingsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get filings_index_url
-    assert_response :success
-  end
+  test 'parse_from_xml parses XML correctly' do
+    # Create a Nokogiri::XML::Document object from a test XML string
+    doc = Nokogiri::XML('<root><child>Test</child></root>')
 
-  test "should get show" do
-    get filings_show_url
-    assert_response :success
-  end
+    # Stub the XML_XPATH constant
+    FilingsController::XML_XPATH = {child: {path: 'child'}}
 
-  test "should get upload" do
-    get filings_upload_url
-    assert_response :success
+    # Call the method
+    data = @controller.send(:parse_from_xml, doc)
+
+    # Check the result
+    assert_equal({child: 'Test'}, data)
   end
 end
