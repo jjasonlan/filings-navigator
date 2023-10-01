@@ -42,7 +42,22 @@ class FilingsController < ApplicationController
   }
 
   def index
+    if params[:filer_ein]
+      filings = Filing.joins(:filer)
+                      .where(filers: { ein: params[:filer_ein] })
+                      .group("filers.id, tax_period_end_date")
+                      .having("MAX(return_timestamp) = return_timestamp")
+                      .order("tax_period_end_date DESC")
+    else
+      filings = Filing.joins(:filer)
+                      .group("filers.id, tax_period_end_date")
+                      .having("MAX(return_timestamp) = return_timestamp")
+                      .order("return_timestamp DESC")
+    end
+    render json: filings
   end
+
+  def
 
   def create
     url = params[:url]
