@@ -1,8 +1,7 @@
 class CreateRecipients < ActiveRecord::Migration[7.0]
   def change
     create_table :recipients do |t|
-      t.string :award_list_id, null: false
-      t.string :ein, null: false
+      t.string :ein
       t.string :name, null: false
       t.string :address_line_1, null: false
       t.string :city, null: false

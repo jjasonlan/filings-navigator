@@ -10,24 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_050653) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_21_050416) do
   create_table "award_lists", force: :cascade do |t|
-    t.string "filing_id", null: false
-    t.string "filer_id", null: false
-    t.string "recipient_id", null: false
+    t.integer "filing_id"
+    t.integer "recipient_id"
     t.integer "amount", null: false
-    t.boolean "amended", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "award_lists_recipients", id: false, force: :cascade do |t|
-    t.integer "award_list_id", null: false
-    t.integer "recipient_id", null: false
+    t.index ["filing_id"], name: "index_award_lists_on_filing_id"
+    t.index ["recipient_id"], name: "index_award_lists_on_recipient_id"
   end
 
   create_table "filers", force: :cascade do |t|
-    t.string "filing_id", null: false
     t.string "ein", null: false
     t.string "name", null: false
     t.string "address_line_1", null: false
@@ -36,25 +30,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_050653) do
     t.string "zip", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "filers_filings", id: false, force: :cascade do |t|
-    t.integer "filer_id", null: false
-    t.integer "filing_id", null: false
-    t.index ["filer_id"], name: "index_filers_filings_on_filer_id"
   end
 
   create_table "filings", force: :cascade do |t|
-    t.string "filer_id", null: false
+    t.integer "filer_id"
     t.date "tax_period_end_date", null: false
     t.datetime "return_timestamp", precision: nil, null: false
+    t.boolean "amended", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["filer_id"], name: "index_filings_on_filer_id"
   end
 
   create_table "recipients", force: :cascade do |t|
-    t.string "award_list_id", null: false
-    t.string "ein", null: false
+    t.string "ein"
     t.string "name", null: false
     t.string "address_line_1", null: false
     t.string "city", null: false
@@ -64,4 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_050653) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "award_lists", "filings"
+  add_foreign_key "filings", "filers"
 end

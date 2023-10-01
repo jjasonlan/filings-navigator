@@ -1,7 +1,6 @@
 class CreateFilers < ActiveRecord::Migration[7.0]
   def change
     create_table :filers do |t|
-      t.string :filing_id, null: false
       t.string :ein, null: false
       t.string :name, null: false
       t.string :address_line_1, null: false

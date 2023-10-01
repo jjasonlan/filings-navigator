@@ -7,11 +7,14 @@
 ## Prepare DB
 
 - `rake db:migrate`
-- **_ TODO _**
 
 ## Running the server
 
 - `rails s`
+
+## Upload all filings
+
+- `rake seed`
 
 ### Total time: ~12 hours
 
@@ -61,6 +64,9 @@ Example: "The filer’s 2015 filing declares that they gave 18 awards to 12 diff
 - Filing Path: `Return/ReturnHeader`
   - Return Timestamp: `{ReturnTs}`
   - Tax Period: `{TaxPeriodEndDt,TaxPeriodEndDate}`
+- Filing Summary Path: `Return/ReturnData/IRS990`
+  <!-- edited to match path in XML documents -->
+  - Amended Return Indicator: `{AmendedReturnInd}`
 - Filer Path: `Return/ReturnHeader/Filer`
   - EIN: `EIN`
   - Name: `{Name,BusinessName}/{BusinessNameLine1,BusinessNameLine1Txt}`
@@ -70,7 +76,6 @@ Example: "The filer’s 2015 filing declares that they gave 18 awards to 12 diff
   - State: `{State,StateAbbreviationCd}`
   - Zip: `{ZIPCode,ZIPCd}`
 - Award List Path: `Return/ReturnData/IRS990ScheduleI/RecipientTable`
-  - Amended Return Indicator: `{AmendedReturnInd}`
   - EIN: `{EINOfRecipient,RecipientEIN}`
   - Recipient Name: `{RecipientNameBusiness,RecipientBusinessName}/{BusinessNameLine1,BusinessNameLine1Txt}`
   - Recipient Address: `{USAddress,AddressUS}`
